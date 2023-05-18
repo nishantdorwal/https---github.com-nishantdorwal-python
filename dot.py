@@ -73,9 +73,11 @@ for i in range(2,10): # i=2, 1, <
 for i in range(2,10,2): # i=2, 2, <
     print(i)
 """
-product=["product1","product2"]
-rate =[100,200]
-qty=[20,32]
+
+#data =[3,4]
+product=["product1","product2","product3","product4"]
+rate =[100,200,240,233]
+qty=[20,32,20,40]
 addproduct=[]
 addqty=[]
 addrate=[]
@@ -110,24 +112,34 @@ if(log):
         print(qty[i],end="\n")
         i=i+1
     while True:
-        ch = input("enter add product 'yes'")
-        if(ch == 'yes'):
+        ch = input("enter 'y' to add product ")
+        if(ch == 'y'):
             pro=input("enter product name")
             for i in range(len(product)):
                 if(pro==product[i]):
                     p_pos=i
                     p_find=True
                     break
+                
             if p_find:
+                q_pos=0
                 q= int(input("enter qty"))
                 if(q<=qty[p_pos]):
                     print(rate[p_pos])
-                    addproduct.append(pro)
-                    addqty.append(q)
+                    if pro not in  addproduct:
+                        addproduct.append(pro)
+                        addqty.append(q)   
+                    else:                  
+                        for i in range(len(addproduct)):
+                            if(pro==product[i]):
+                                q_pos=i
+                                addqty[i]=addqty[i]+q
+                        continue    
+                        
                     addrate.append(rate[p_pos])
-
+                    qty[p_pos]=qty[p_pos]-q                                     
                 else:
-                    print("not") 
+                    print("you have cross the qty limit") 
         else:
             break
     print("*********** add to cart ************")
@@ -136,20 +148,37 @@ if(log):
         print(addqty[i],end="\t")
         print(addrate[i],end="\n")
     print("*********** add to cart ************")
-    rm=input(" product  remove 'yes'")
-    if rm =='yes':
-        p=input("enter product name")
-        for i in range(len(addproduct)):
-            if p==addproduct[i]:
-                addproduct.pop(i)
-                addqty.pop(i)
-                addrate.pop(i)
-                break
+    while True:
+        rm=input(" product  remove 'y'")
+        if rm =='y':
+            p=input("enter product name")
+            q1=int(input("enter the qty of product"))
+            for i in range(len(addproduct)):
+                if p==addproduct[i]:
+                    addqty[i]=addqty[i]-q1
+                        
+                    if addqty[i] == 0:
+                        addproduct.pop(i)
+                        
+        else:
+            break            
+           
+                
+
+    totalpay=0
     for i in range(len(addproduct)):
         print(addproduct[i],end="\t")
         print(addqty[i],end="\t")
         print(addrate[i],end="\n")
-    user1
+        totalpay+=addqty[i]*addrate[i];
+    print("Total pay",totalpay)
+    pay =int(input("enter pay"))
+    if(pay==totalpay):
+        print("thx")
+    
+print("*****************")
+
+    
 
 
 """ data =[3,4,5,4,6]
@@ -179,6 +208,3 @@ print(len(data)) """
 print(user)
 for i in data:
     print(i) """
-
-
-
